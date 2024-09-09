@@ -3,6 +3,7 @@
 *.iws
 *.iml
 *.ipr
+.env
 mvnw*
 test.db
 *.sqlite

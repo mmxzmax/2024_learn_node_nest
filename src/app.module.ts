@@ -2,27 +2,31 @@ import { Module } from '@nestjs/common';
 import { AuthModule } from './api/auth/auth.module';
 import { CommentsModule } from './api/comments/comments.module';
 import { BlogModule } from './api/blog/blog.module';
-import { UserModule } from './api/user';
 import { DbModule } from './data/db/db.module';
 import { JwtModule } from '@nestjs/jwt';
-import { jwtConstants } from './constants';
 import { APP_GUARD } from '@nestjs/core';
 import { AuthGuard } from './guards/auth.guard';
-import { ConfigModule } from '@nestjs/config';
+import { ConfigModule, ConfigService } from '@nestjs/config';
+import { UserModule } from './api/user/user.module';
 
 @Module({
   imports: [
     AuthModule,
     CommentsModule,
-    BlogModule,
     UserModule,
+    BlogModule,
     DbModule,
-    JwtModule.register({
+    JwtModule.registerAsync({
       global: true,
-      secret: jwtConstants.secret,
-      signOptions: { expiresIn: '60s' },
+      useFactory: (configService: ConfigService) => ({
+        secret: configService.get('JWT_SECRET_KEY'),
+        signOptions: { expiresIn: '60s' },
+      }),
+      inject: [ConfigService]
     }),
-    ConfigModule.forRoot(),
+    ConfigModule.forRoot({
+      isGlobal: true,
+    }),
   ],
   providers: [
     {

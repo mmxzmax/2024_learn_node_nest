@@ -17,7 +17,9 @@ import { IUser } from './types';
 
 @Controller('user')
 export class UserController {
-  constructor(private userService: UserService) {}
+  constructor(private userService: UserService) {
+    
+  }
 
   @Roles(Role.User)
   @Get()
@@ -37,7 +39,7 @@ export class UserController {
   @Post()
   editProfile(@GetUser() user: IUser, @Body() data: EditUserDto) {
     const id = user.id;
-    return this.userService.editUserData({ id, ...data });
+    return this.userService.editUserData(id, data);
   }
 
   @Roles(Role.Admin)
@@ -52,6 +54,6 @@ export class UserController {
     @Body() user: EditFullUserDto,
     @Param('id', ParseIntPipe) id: number,
   ) {
-    return this.userService.editUserData({ id, ...user });
+    return this.userService.editUserData(id, user);
   }
 }

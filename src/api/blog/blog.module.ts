@@ -4,8 +4,8 @@ import { BlogService } from './blog.service';
 import { APP_GUARD } from '@nestjs/core';
 import { RolesGuard } from 'src/guards/role.guard';
 import { TypeOrmModule } from '@nestjs/typeorm';
-import { UserEntity } from 'src/data/repository/user/user.entity';
-import { BlogEntity } from 'src/data/repository/blog/blog.entity';
+import { UserEntity } from '../user/repositories/user.entity';
+import { BlogEntity } from './repositories/blog.entity';
 
 @Module({
   imports: [TypeOrmModule.forFeature([UserEntity, BlogEntity])],
@@ -17,5 +17,6 @@ import { BlogEntity } from 'src/data/repository/blog/blog.entity';
       useClass: RolesGuard,
     },
   ],
+  exports: [BlogService]
 })
 export class BlogModule {}

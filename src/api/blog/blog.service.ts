@@ -1,9 +1,9 @@
 import { Injectable, NotAcceptableException, NotFoundException } from '@nestjs/common';
 import { IUserPost } from './types';
 import { InjectRepository } from '@nestjs/typeorm';
-import { UserEntity } from 'src/data/repository/user/user.entity';
 import { Repository } from 'typeorm';
-import { BlogEntity } from 'src/data/repository/blog/blog.entity';
+import { UserEntity } from '../user/repositories/user.entity';
+import { BlogEntity } from './repositories/blog.entity';
 
 @Injectable()
 export class BlogService {

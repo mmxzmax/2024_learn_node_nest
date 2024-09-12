@@ -1,19 +1,15 @@
 import { Entity, PrimaryGeneratedColumn, Column, ManyToOne } from "typeorm";
-import { UserEntity } from "../user/user.entity";
-import { BlogEntity } from "../blog/blog.entity";
+import { UserEntity } from "./user.entity";
 
 
 @Entity()
-export class CommentEntity {
+export class TokenEntity {
   @PrimaryGeneratedColumn()
   id: number;
 
   @Column()
-  text:string;
+  token: string;
 
   @ManyToOne(() => UserEntity, (user) => user.type)
   user: UserEntity
-
-  @ManyToOne(() => BlogEntity, (post) => post.id)
-  post: BlogEntity
 }

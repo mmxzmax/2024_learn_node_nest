@@ -8,9 +8,9 @@ import { AuthGuard } from './guards/auth.guard';
 import { ConfigModule, ConfigService } from '@nestjs/config';
 import { UserModule } from './api/user/user.module';
 import { TypeOrmModule } from '@nestjs/typeorm';
-import { RoleEntity } from './data/repository/roles/roles.entity';
-import { TokenEntity } from './data/repository/tokens/tokens.entity';
-import { UserEntity } from './data/repository/user/user.entity';
+import { ApolloDriverConfig, ApolloDriver } from '@nestjs/apollo';
+import { GraphQLModule } from '@nestjs/graphql';
+import { join } from 'node:path';
 
 @Module({
   imports: [
@@ -24,9 +24,19 @@ import { UserEntity } from './data/repository/user/user.entity';
         username: configService.get('DB_USERNAME'),
         password: configService.get('DB_PASSWORD'),
         database: configService.get('DB_NAME'),
-        entities: [UserEntity, RoleEntity, TokenEntity],
+        entities: [],
         synchronize: true,
         autoLoadEntities: true,
+      }),
+    }),
+    GraphQLModule.forRootAsync<ApolloDriverConfig>({
+      imports: [ConfigModule],
+      inject: [ConfigService],
+      driver: ApolloDriver,
+      useFactory: (configService: ConfigService) => ({
+        playground: configService.get('GRAPH_QL_PLAYGROUND'),
+        autoSchemaFile: join(process.cwd(), 'src/schema.gql'),
+        sortSchema: true,
       }),
     }),
     AuthModule,

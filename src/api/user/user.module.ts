@@ -4,12 +4,14 @@ import { UserService } from './user.service';
 import { APP_GUARD } from '@nestjs/core';
 import { RolesGuard } from 'src/guards/role.guard';
 import { TypeOrmModule } from '@nestjs/typeorm';
-import { RoleEntity } from 'src/data/repository/roles/roles.entity';
-import { TokenEntity } from 'src/data/repository/tokens/tokens.entity';
-import { UserEntity } from 'src/data/repository/user/user.entity';
+import { RoleEntity } from './repositories/roles.entity';
+import { TokenEntity } from './repositories/tokens.entity';
+import { UserEntity } from './repositories/user.entity';
+import { UserResolver } from './user.resolver';
+import { BlogModule } from '../blog/blog.module';
 
 @Module({
-  imports: [TypeOrmModule.forFeature([UserEntity, RoleEntity, TokenEntity])],
+  imports: [TypeOrmModule.forFeature([UserEntity, RoleEntity, TokenEntity]), BlogModule],
   controllers: [UserController],
   providers: [
     UserService,
@@ -17,6 +19,7 @@ import { UserEntity } from 'src/data/repository/user/user.entity';
       provide: APP_GUARD,
       useClass: RolesGuard,
     },
+    UserResolver
   ],
   exports: [UserService],
 })

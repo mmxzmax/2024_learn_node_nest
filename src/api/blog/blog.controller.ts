@@ -3,7 +3,7 @@ import { BlogService } from './blog.service';
 import { Role, Roles } from 'src/guards/role.guard';
 import { GetUser } from 'src/decorators/get-user.decorator';
 import { CreatePostDto } from './blog-dto';
-import { UserEntity } from 'src/data/repository/user/user.entity';
+import { UserEntity } from '../user/repositories/user.entity';
 
 @Controller('blog')
 export class BlogController {

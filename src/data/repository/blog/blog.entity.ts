@@ -7,7 +7,7 @@ export class BlogEntity {
   @PrimaryGeneratedColumn()
   id: number;
 
-  @Column()
+  @Column("varchar", { length:  1024})
   title:string;
 
   @Column()

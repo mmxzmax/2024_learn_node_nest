@@ -8,16 +8,16 @@ export class UserEntity {
   @PrimaryGeneratedColumn()
   id: number;
 
-  @Column()
+  @Column("varchar", { length: 50 })
   name: string;
 
-  @Column()
+  @Column("varchar", { length: 50 })
   login: string;
 
-  @Column()
+  @Column("varchar", { length:  200})
   pass: string;
 
-  @Column()
+  @Column("varchar", { length:  200})
   salt: string;
 
   @OneToMany(() => RoleEntity, (role) => role.user)

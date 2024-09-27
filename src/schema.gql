@@ -1,0 +1,31 @@
+# ------------------------------------------------------
+# THIS FILE WAS AUTOMATICALLY GENERATED (DO NOT MODIFY)
+# ------------------------------------------------------
+
+type BlogEntity {
+  id: Int!
+  text: String!
+  title: String!
+}
+
+type Mutation {
+  changeUserName(newName: String!, userId: Int!): UserEntity!
+}
+
+type Query {
+  user(id: Int!): UserEntity!
+}
+
+type RoleEntity {
+  id: Int!
+  role: String!
+  user: UserEntity!
+}
+
+type UserEntity {
+  id: Int!
+  login: String!
+  name: String!
+  posts: [BlogEntity]!
+  type: [RoleEntity]!
+}

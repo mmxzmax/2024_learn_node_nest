@@ -3,9 +3,11 @@
 *.iws
 *.iml
 *.ipr
+.env
 mvnw*
 test.db
 *.sqlite
 .mvn
 node_modules
 coverage
+dist

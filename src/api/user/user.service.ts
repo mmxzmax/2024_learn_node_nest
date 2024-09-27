@@ -1,12 +1,12 @@
-import { Injectable, NotAcceptableException, UnauthorizedException } from '@nestjs/common';
+import { Injectable, NotAcceptableException } from '@nestjs/common';
 import { IUser } from './types';
 import { pbkdf2Sync, randomBytes } from 'node:crypto';
 import { InjectRepository } from '@nestjs/typeorm';
-import { RoleEntity } from 'src/data/repository/roles/roles.entity';
-import { TokenEntity } from 'src/data/repository/tokens/tokens.entity';
-import { UserEntity } from 'src/data/repository/user/user.entity';
 import { Repository } from 'typeorm';
 import { Role } from 'src/guards/role.guard';
+import { RoleEntity } from './repositories/roles.entity';
+import { TokenEntity } from './repositories/tokens.entity';
+import { UserEntity } from './repositories/user.entity';
 
 @Injectable()
 export class UserService {

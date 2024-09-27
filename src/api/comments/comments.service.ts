@@ -1,12 +1,10 @@
 import { Injectable, NotAcceptableException } from '@nestjs/common';
-import { IUser } from '../user/types';
-import { Role } from 'src/guards/role.guard';
 import { IUserComment } from './types';
 import { InjectRepository } from '@nestjs/typeorm';
-import { BlogEntity } from 'src/data/repository/blog/blog.entity';
-import { UserEntity } from 'src/data/repository/user/user.entity';
 import { Repository } from 'typeorm';
-import { CommentEntity } from 'src/data/repository/comments/comments.entity';
+import { UserEntity } from '../user/repositories/user.entity';
+import { BlogEntity } from '../blog/repositories/blog.entity';
+import { CommentEntity } from './repositories/comments.entity';
 
 @Injectable()
 export class CommentsService {

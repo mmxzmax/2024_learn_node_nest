@@ -2,7 +2,7 @@ import { Injectable, CanActivate, ExecutionContext } from '@nestjs/common';
 import { Reflector } from '@nestjs/core';
 
 import { SetMetadata } from '@nestjs/common';
-import { UserEntity } from 'src/data/repository/user/user.entity';
+import { UserEntity } from 'src/api/user/repositories/user.entity';
 export enum Role {
   User = 'user',
   Admin = 'admin',

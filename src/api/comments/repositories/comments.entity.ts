@@ -1,6 +1,6 @@
 import { Entity, PrimaryGeneratedColumn, Column, ManyToOne } from "typeorm";
-import { UserEntity } from "../user/user.entity";
-import { BlogEntity } from "../blog/blog.entity";
+import { BlogEntity } from "../../blog/repositories/blog.entity";
+import { UserEntity } from "src/api/user/repositories/user.entity";
 
 
 @Entity()

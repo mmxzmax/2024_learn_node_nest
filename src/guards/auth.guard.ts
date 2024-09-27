@@ -10,6 +10,7 @@ import { Reflector } from '@nestjs/core';
 import { ConfigService } from '@nestjs/config';
 import { extractTokenFromHeader } from 'src/helpers/helpers';
 import { UserService } from 'src/api/user/user.service';
+import { GqlExecutionContext } from '@nestjs/graphql';
 
 export const IS_PUBLIC_KEY = 'isPublic';
 export const Public = () => SetMetadata(IS_PUBLIC_KEY, true);
@@ -31,7 +32,8 @@ export class AuthGuard implements CanActivate {
     if (isPublic) {
       return true;
     }
-    const request = context.switchToHttp().getRequest();
+    const ctx = GqlExecutionContext.create(context);
+    const request = context?.switchToHttp()?.getRequest() ?? ctx?.getContext()?.req;
     const token = extractTokenFromHeader(request);
     if (!token) {
       throw new UnauthorizedException();
@@ -41,11 +43,13 @@ export class AuthGuard implements CanActivate {
         secret: this.configService.get('JWT_SECRET_KEY'),
       });
       const user = await this.userService.getUserById(payload.sub);
-      if (!user.activeTokens.includes(token)) {
-        throw new UnauthorizedException();
+      if(user.activeTokens.find(t => t.token === token)) {
+        request['user'] = user;
+      } else {
+        throw new Error('inactive token');
       }
-      request['user'] = user;
     } catch {
+      this.userService.deleteToken(token);
       throw new UnauthorizedException();
     }
     return true;

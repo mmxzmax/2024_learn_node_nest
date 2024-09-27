@@ -11,8 +11,8 @@ import {
 import { CommentsService } from './comments.service';
 import { Role, Roles } from 'src/guards/role.guard';
 import { GetUser } from 'src/decorators/get-user.decorator';
-import { IUser } from '../user/types';
 import { CreateCommentDto } from './comments-dto';
+import { UserEntity } from '../user/repositories/user.entity';
 
 @Controller('comments')
 export class CommentsController {
@@ -20,14 +20,14 @@ export class CommentsController {
 
   @Roles(Role.User)
   @Get(':postId')
-  posts(@GetUser() user: IUser, @Param('postId', ParseIntPipe) postId: number) {
+  posts(@GetUser() user: UserEntity, @Param('postId', ParseIntPipe) postId: number) {
     return this.commentsService.getPostComments(postId, user);
   }
 
   @Roles(Role.User)
   @Put(':postId')
   createComment(
-    @GetUser() user: IUser,
+    @GetUser() user: UserEntity,
     @Param('postId', ParseIntPipe) postId: number,
     @Body() comment: CreateCommentDto,
   ) {
@@ -37,7 +37,7 @@ export class CommentsController {
   @Roles(Role.User, Role.Admin, Role.Moderator)
   @Post(':postId/:commentId')
   editComment(
-    @GetUser() user: IUser,
+    @GetUser() user: UserEntity,
     @Param('postId', ParseIntPipe) postId: number,
     @Param('commentId', ParseIntPipe) commentId: number,
     @Body() comment: CreateCommentDto,
@@ -48,7 +48,7 @@ export class CommentsController {
   @Roles(Role.User, Role.Admin, Role.Moderator)
   @Delete(':postId/:commentId')
   deleteComment(
-    @GetUser() user: IUser,
+    @GetUser() user: UserEntity,
     @Param('postId', ParseIntPipe) postId: number,
     @Param('commentId', ParseIntPipe) commentId: number,
     @Body() comment: CreateCommentDto,

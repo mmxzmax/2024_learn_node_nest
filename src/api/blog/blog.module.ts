@@ -3,10 +3,12 @@ import { BlogController } from './blog.controller';
 import { BlogService } from './blog.service';
 import { APP_GUARD } from '@nestjs/core';
 import { RolesGuard } from 'src/guards/role.guard';
-import { DbModule } from 'src/data/db/db.module';
+import { TypeOrmModule } from '@nestjs/typeorm';
+import { UserEntity } from '../user/repositories/user.entity';
+import { BlogEntity } from './repositories/blog.entity';
 
 @Module({
-  imports: [DbModule],
+  imports: [TypeOrmModule.forFeature([UserEntity, BlogEntity])],
   controllers: [BlogController],
   providers: [
     BlogService,
@@ -15,5 +17,6 @@ import { DbModule } from 'src/data/db/db.module';
       useClass: RolesGuard,
     },
   ],
+  exports: [BlogService]
 })
 export class BlogModule {}

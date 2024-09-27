@@ -11,7 +11,7 @@ export class BlogEntity {
   id: number;
 
   @Field()
-  @Column()
+  @Column("varchar", { length:  1024})
   title:string;
 
   @Field()

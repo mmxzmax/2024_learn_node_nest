@@ -8,7 +8,7 @@ export class CommentEntity {
   @PrimaryGeneratedColumn()
   id: number;
 
-  @Column()
+  @Column("varchar", { length:  1024})
   text:string;
 
   @ManyToOne(() => UserEntity, (user) => user.type)

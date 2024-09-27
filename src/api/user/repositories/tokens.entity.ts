@@ -7,7 +7,7 @@ export class TokenEntity {
   @PrimaryGeneratedColumn()
   id: number;
 
-  @Column()
+  @Column("varchar", { length:  500})
   token: string;
 
   @ManyToOne(() => UserEntity, (user) => user.type)

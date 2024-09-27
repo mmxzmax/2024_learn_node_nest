@@ -13,18 +13,18 @@ export class UserEntity {
   @PrimaryGeneratedColumn()
   id: number;
 
+  @Column("varchar", { length: 50 })
   @Field()
-  @Column()
   name: string;
 
+  @Column("varchar", { length: 50 })
   @Field()
-  @Column()
   login: string;
 
-  @Column()
+  @Column("varchar", { length:  200})
   pass: string;
 
-  @Column()
+  @Column("varchar", { length:  200})
   salt: string;
 
   @Field(type => [RoleEntity], { nullable: 'items' })
